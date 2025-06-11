@@ -7,7 +7,7 @@ AWS (Amazon Web Services) powers a huge portion of the cloud industry and master
 
 Table of Contents
 
-Compute Services
+Compute Services 
 Storage Services
 Database Services
 Networking & Content Delivery
@@ -22,6 +22,7 @@ Preparing for AWS Certifications
 
 
 1. Compute Services
+
 Amazon EC2 (Elastic Compute Cloud)
 EC2 provides resizable virtual servers in the cloud. It offers a wide variety of instance types optimized for CPU, memory, storage, or GPU-intensive workloads. You pay per second or hour, depending on instance type.
 
