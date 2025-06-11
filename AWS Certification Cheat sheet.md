@@ -1,223 +1,354 @@
-#AWS Cheat sheet to help you prepare for AWS certification exam
+# AWS Certification Cheat Sheet
 
-More cheatsheets can be found here - https://cloudoku.training/cheatsheets
+_Last updated: June 2025_
 
-Comprehensive Guide to All Core AWS Services, Concepts, and Best Practices
-AWS (Amazon Web Services) powers a huge portion of the cloud industry and mastering its services is essential for cloud professionals and enthusiasts. This cheatsheet condenses the vast AWS ecosystem into an accessible, detailed guide covering all core services, best practices, and study tips.
+**More cheatsheets:** [Cloudoku Training Cheatsheets](https://cloudoku.training/cheatsheets)
 
-Table of Contents
+---
 
-Compute Services 
-Storage Services
-Database Services
-Networking & Content Delivery
-Security, Identity & Compliance
-Analytics & Machine Learning
-Developer Tools & Management
-Migration & Transfer
-Application Integration
-Cost Management & Optimization
-Best Practices and Tips
-Preparing for AWS Certifications
+## Table of Contents
 
+- [1. Compute Services](#1-compute-services)
+- [2. Storage Services](#2-storage-services)
+- [3. Database Services](#3-database-services)
+- [4. Networking & Content Delivery](#4-networking--content-delivery)
+- [5. Security, Identity & Compliance](#5-security-identity--compliance)
+- [6. Analytics & Machine Learning](#6-analytics--machine-learning)
+- [7. Developer Tools & Management](#7-developer-tools--management)
+- [8. Migration & Transfer](#8-migration--transfer)
+- [9. Application Integration](#9-application-integration)
+- [10. Cost Management & Optimization](#10-cost-management--optimization)
+- [11. Best Practices and Tips](#11-best-practices-and-tips)
+- [12. Preparing for AWS Certifications](#12-preparing-for-aws-certifications)
 
-1. Compute Services
+---
 
-Amazon EC2 (Elastic Compute Cloud)
-EC2 provides resizable virtual servers in the cloud. It offers a wide variety of instance types optimized for CPU, memory, storage, or GPU-intensive workloads. You pay per second or hour, depending on instance type.
+## 1. Compute Services
 
-Instance Types: General Purpose (t3, m5), Compute Optimized (c5), Memory Optimized (r5), GPU Instances (p3, g4).
-Pricing Models: On-Demand, Reserved Instances (1 or 3 years), Spot Instances (interruptible, low cost), Dedicated Hosts.
-Key Features: Auto Scaling, Elastic Load Balancing, Elastic IPs, Security Groups.
-Example Use Case: Hosting scalable web applications, batch processing, high-performance computing.
-AWS Lambda
-Lambda lets you run code without provisioning or managing servers — serverless compute. You pay only for the compute time consumed.
+### **Amazon EC2 (Elastic Compute Cloud)**
+- **Purpose:** Resizable virtual servers in the cloud.
+- **Instance Types:** General Purpose (`t3`, `m5`), Compute Optimized (`c5`), Memory Optimized (`r5`), GPU (`p3`, `g4`)
+- **Pricing Models:** On-Demand, Reserved, Spot, Dedicated Hosts
+- **Key Features:** Auto Scaling, Elastic Load Balancing, Elastic IPs, Security Groups
+- **Example:**
+    ```sh
+    aws ec2 run-instances --image-id ami-12345678 --count 1 --instance-type t3.micro
+    ```
+- **Exam Tip:** Know when to use each instance type/pricing model.
 
-Supported Languages: Node.js, Python, Java, C#, Go, Ruby, custom runtimes.
-Triggers: API Gateway, S3 events, DynamoDB streams, CloudWatch Events, and more.
-Use Cases: Backend for web/mobile apps, real-time file processing, IoT data handling.
-Tip: Combine Lambda with API Gateway to build scalable RESTful APIs.
-Amazon Elastic Beanstalk
-A platform as a service (PaaS) that makes it easy to deploy and manage applications in the AWS Cloud without worrying about infrastructure.
+---
 
-Supports: Java, .NET, PHP, Node.js, Python, Ruby, Go, Docker.
-Features: Auto Scaling, load balancing, health monitoring.
-Ideal for: Rapid deployment of web applications and services.
-Amazon ECS & EKS
-Managed container orchestration services.
+### **AWS Lambda**
+- **Purpose:** Run code without provisioning/managing servers (serverless).
+- **Supported Languages:** Node.js, Python, Java, C#, Go, Ruby, custom runtimes
+- **Common Triggers:** API Gateway, S3 events, DynamoDB streams, CloudWatch Events
+- **Example:**
+    ```sh
+    aws lambda create-function --function-name MyFunction \
+      --runtime python3.8 \
+      --role arn:aws:iam::123456789012:role/service-role/MyTestFunction-role-abc123 \
+      --handler lambda_function.lambda_handler \
+      --zip-file fileb://function.zip
+    ```
+- **Exam Tip:** Lambda billing is per ms of execution time.
 
-ECS (Elastic Container Service): Highly scalable Docker container management.
-EKS (Elastic Kubernetes Service): Managed Kubernetes cluster service.
-Fargate: Serverless compute engine for containers — no server management needed.
-Use Cases: Microservices, containerized applications.
-AWS Batch
-Fully managed batch computing service to run large-scale parallel and high-performance computing (HPC) workloads.
+---
 
-AWS Outposts
-Extends AWS infrastructure and services to on-premises locations for hybrid cloud environments.
+### **Amazon Elastic Beanstalk**
+- **Purpose:** PaaS for easy deployment and management of web apps.
+- **Supported Platforms:** Java, .NET, PHP, Node.js, Python, Ruby, Go, Docker
+- **Features:** Auto Scaling, load balancing, health monitoring
 
-2. Storage Services
-Amazon S3 (Simple Storage Service)
-Object storage built to store and retrieve any amount of data from anywhere on the web.
+---
 
-Storage Classes: Standard, Intelligent-Tiering, Standard-IA, One Zone-IA, Glacier, Glacier Deep Archive.
-Features: 99.999999999% (11 nines) durability, lifecycle policies, versioning, encryption options.
-Use Cases: Backup and restore, static website hosting, big data analytics, media hosting.
-Amazon EBS (Elastic Block Store)
-Persistent block storage volumes for use with EC2 instances.
+### **Amazon ECS & EKS**
+- **ECS:** AWS-managed Docker container orchestration.
+- **EKS:** AWS-managed Kubernetes clusters.
+- **Fargate:** Serverless compute engine for containers.
+- **Use Cases:** Microservices, containerized workloads
 
-Volume Types: General Purpose SSD (gp3/gp2), Provisioned IOPS SSD (io1/io2), Throughput Optimized HDD (st1), Cold HDD (sc1).
-Use Cases: Boot volumes, databases, enterprise applications requiring consistent low latency.
-Amazon EFS (Elastic File System)
-Scalable file storage for use with Linux-based workloads.
+---
 
-Use Cases: Content management, web serving, data sharing across multiple EC2 instances.
-Features: Scales automatically, supports NFS protocol, multi-AZ replication for availability.
-Amazon FSx
-Fully managed Windows or Lustre file systems optimized for specific workloads.
+### **AWS Batch**
+- **Purpose:** Managed batch computing for large-scale parallel/HPC workloads.
+- **Use Case:** Scientific simulations, financial modeling, genomics
 
-AWS Storage Gateway
-Hybrid storage service connecting on-premises software appliances with cloud-based storage.
+---
 
-3. Database Services
-Amazon RDS (Relational Database Service)
-Managed relational database service supporting several engines including MySQL, PostgreSQL, Oracle, SQL Server, and Amazon Aurora.
+### **AWS Outposts**
+- **Purpose:** Extend AWS infrastructure/services to on-premises for hybrid cloud.
 
-Features: Automated backups, Multi-AZ for high availability, read replicas for scaling.
-Use Cases: Traditional transactional applications.
-Amazon Aurora
-High-performance, MySQL- and PostgreSQL-compatible relational database designed for the cloud.
+---
 
-Advantages: Up to 5x faster than standard MySQL, fully managed, fault tolerant.
-Amazon DynamoDB
-Fully managed, serverless NoSQL database with key-value and document data models.
+## 2. Storage Services
 
-Features: Single-digit millisecond latency, auto scaling, global tables.
-Use Cases: Gaming, IoT, mobile apps requiring low latency.
-Amazon ElastiCache
-In-memory data store and cache supporting Redis and Memcached.
+### **Amazon S3 (Simple Storage Service)**
+- **Purpose:** Object storage for any amount of data from anywhere.
+- **Storage Classes:** Standard, Intelligent-Tiering, Standard-IA, One Zone-IA, Glacier, Glacier Deep Archive
+- **Features:** 11 nines durability, lifecycle policies, versioning, encryption
+- **Use Cases:** Backup, static hosting, analytics, media hosting
+- **Example:**
+    ```sh
+    aws s3 cp file.txt s3://mybucket/
+    ```
+- **Exam Tip:** Know when to use each storage class.
 
-Amazon Neptune
-Fully managed graph database service for highly connected datasets.
+---
 
-Amazon DocumentDB
-Managed document database service compatible with MongoDB workloads.
+### **Amazon EBS (Elastic Block Store)**
+- **Purpose:** Persistent block storage for EC2.
+- **Volume Types:** gp3/gp2 (SSD), io1/io2 (Provisioned IOPS), st1 (Throughput HDD), sc1 (Cold HDD)
+- **Use Cases:** Boot volumes, databases, low-latency apps
 
-Amazon Timestream
-Fast, scalable time-series database service for IoT and operational applications.
+---
 
-4. Networking & Content Delivery
-Amazon VPC (Virtual Private Cloud)
-Create isolated virtual networks, define subnets, route tables, gateways, and security settings.
+### **Amazon EFS (Elastic File System)**
+- **Purpose:** Scalable file storage for Linux workloads.
+- **Features:** Scales automatically, supports NFS, multi-AZ replication
 
-Features: Public and private subnets, NAT gateways, VPC peering, VPN connections.
-Tip: Use private subnets for sensitive workloads and route traffic through NAT gateways.
-Elastic Load Balancing (ELB)
-Automatically distributes incoming traffic across multiple targets like EC2 instances, containers, or IP addresses.
+---
 
-Types: Application Load Balancer (HTTP/HTTPS), Network Load Balancer (TCP/UDP), Gateway Load Balancer.
-Use Cases: High availability, fault tolerance, scaling web applications.
-Amazon Route 53
-Highly available DNS service that translates domain names to IP addresses.
+### **Amazon FSx**
+- **Purpose:** Managed Windows or Lustre file systems.
 
-Features: DNS routing, health checks, traffic policies, domain registration.
-Tip: Use latency-based routing to direct users to the closest endpoint.
-Amazon CloudFront
-Content Delivery Network (CDN) for fast, low-latency delivery of static and dynamic web content globally.
+---
 
-AWS Direct Connect
-Dedicated network connection from your premises to AWS for higher bandwidth and consistent network performance.
+### **AWS Storage Gateway**
+- **Purpose:** Hybrid storage bridging on-premises software with cloud storage.
 
-AWS Global Accelerator
-Improves availability and performance of applications by routing traffic through the AWS global network.
+---
 
-5. Security, Identity & Compliance
-AWS IAM (Identity and Access Management)
-Control user access to AWS resources through users, groups, roles, and policies.
+## 3. Database Services
 
-Best Practice: Use least privilege, MFA, and roles for EC2 and Lambda.
-AWS Organizations & SCPs (Service Control Policies)
-Manage multiple AWS accounts and apply governance guardrails.
+### **Amazon RDS (Relational Database Service)**
+- **Purpose:** Managed relational DBs (MySQL, PostgreSQL, Oracle, SQL Server, Aurora)
+- **Features:** Automated backups, Multi-AZ, read replicas
 
-AWS KMS (Key Management Service)
-Create and manage encryption keys to protect your data.
+---
 
-AWS CloudTrail & AWS Config
-CloudTrail logs API calls for auditing; Config monitors resource configurations for compliance.
+### **Amazon Aurora**
+- **Purpose:** High-performance, MySQL/PostgreSQL-compatible relational DB.
+- **Advantage:** Up to 5x faster than standard MySQL
 
-AWS Shield & WAF (Web Application Firewall)
-Protect your applications from DDoS attacks and common web exploits.
+---
 
-6. Analytics & Machine Learning
-Amazon Athena
-Serverless interactive query service for analyzing data stored in S3 using standard SQL.
+### **Amazon DynamoDB**
+- **Purpose:** Managed, serverless NoSQL DB with key-value/document models.
+- **Features:** Single-digit ms latency, auto scaling, global tables
 
-Amazon EMR (Elastic MapReduce)
-Managed Hadoop and Spark clusters for big data processing.
+---
 
-Amazon Kinesis
-Real-time data streaming and analytics.
+### **Amazon ElastiCache**
+- **Purpose:** Managed in-memory data store (Redis/Memcached)
 
-Amazon SageMaker
-Build, train, and deploy machine learning models at scale.
+---
 
-AI Services
-Pre-built AI APIs like Comprehend (NLP), Rekognition (image/video), Polly (text-to-speech), Lex (chatbots).
+### **Amazon Neptune**
+- **Purpose:** Managed graph database for highly connected data
 
-7. Developer Tools & Management
-AWS CloudFormation
-Define infrastructure as code to provision AWS resources automatically.
+---
 
-AWS CloudTrail
-Audit AWS API calls for security and compliance.
+### **Amazon DocumentDB**
+- **Purpose:** Managed document DB compatible with MongoDB
 
-Amazon CloudWatch
-Monitor performance metrics, logs, and set alarms.
+---
 
-AWS CodeCommit, CodeBuild, CodeDeploy, CodePipeline
-End-to-end CI/CD pipeline services.
+### **Amazon Timestream**
+- **Purpose:** Scalable time-series database for IoT/operations
 
-AWS Systems Manager
-Automate operational tasks, patch management, and run commands across resources.
+---
 
-8. Migration & Transfer
-AWS Snow Family
-Data transfer devices for moving large volumes of data into AWS.
+## 4. Networking & Content Delivery
 
-AWS Database Migration Service (DMS)
-Migration of databases to AWS with minimal downtime.
+### **Amazon VPC (Virtual Private Cloud)**
+- **Purpose:** Create isolated virtual networks, subnets, route tables, gateways
+- **Features:** Public/private subnets, NAT gateways, VPC peering, VPNs
+- **Tip:** Use private subnets for sensitive workloads
 
-AWS Server Migration Service (SMS)
-Automated migration of on-premises workloads to AWS.
+---
 
-9. Application Integration
-Amazon SQS (Simple Queue Service)
-Fully managed message queues for decoupling microservices.
+### **Elastic Load Balancing (ELB)**
+- **Types:** Application (HTTP/HTTPS), Network (TCP/UDP), Gateway
+- **Use Cases:** High availability, scaling, fault tolerance
 
-Amazon SNS (Simple Notification Service)
-Pub/sub messaging for notifications.
+---
 
-Amazon EventBridge
-Serverless event bus to connect applications using events.
+### **Amazon Route 53**
+- **Purpose:** Highly available DNS service
+- **Features:** DNS routing, health checks, domain registration
 
-AWS Step Functions
-Serverless orchestration of workflows and microservices.
+---
 
-10. Cost Management & Optimization
-AWS Cost Explorer: Visualize and analyze AWS spend over time.
-AWS Budgets: Set custom cost and usage budgets.
-AWS Trusted Advisor: Provides cost optimization recommendations.
-Savings Plans: Flexible pricing model to save on compute costs.
-11. Best Practices and Tips
-Use consistent tagging for cost allocation and resource management.
-Apply least privilege security policies with IAM.
-Enable multi-factor authentication (MFA) everywhere.
-Automate backups, snapshots, and disaster recovery.
-Monitor with CloudWatch and set alarms proactively.
-Leverage Auto Scaling for cost and performance optimization.
-12. Preparing for AWS Certifications
-Prepare with a clear study plan, hands-on practice, and mock exams.
+### **Amazon CloudFront**
+- **Purpose:** CDN for low-latency global delivery of static/dynamic content
 
-Use Cloudoku's expert-crafted AWS practice exams and cheatsheets for exam readiness.
+---
 
-Follow study tips and practice regularly to build confidence.
+### **AWS Direct Connect**
+- **Purpose:** Dedicated network connection from premises to AWS
+
+---
+
+### **AWS Global Accelerator**
+- **Purpose:** Improves global application availability/performance
+
+---
+
+## 5. Security, Identity & Compliance
+
+### **AWS IAM (Identity and Access Management)**
+- **Purpose:** Control access to AWS resources via users, groups, roles, policies
+- **Best Practices:** Least privilege, MFA, use roles for EC2/Lambda
+
+---
+
+### **AWS Organizations & SCPs**
+- **Purpose:** Manage multiple AWS accounts; apply governance guardrails
+
+---
+
+### **AWS KMS (Key Management Service)**
+- **Purpose:** Create/manage encryption keys
+
+---
+
+### **AWS CloudTrail & AWS Config**
+- **CloudTrail:** Logs API calls for auditing
+- **Config:** Monitors resource configurations for compliance
+
+---
+
+### **AWS Shield & WAF**
+- **Shield:** DDoS protection
+- **WAF:** Protects against web exploits
+
+---
+
+## 6. Analytics & Machine Learning
+
+### **Amazon Athena**
+- **Purpose:** Serverless interactive queries on S3 using SQL
+
+---
+
+### **Amazon EMR (Elastic MapReduce)**
+- **Purpose:** Managed Hadoop/Spark clusters for big data processing
+
+---
+
+### **Amazon Kinesis**
+- **Purpose:** Real-time data streaming & analytics
+
+---
+
+### **Amazon SageMaker**
+- **Purpose:** Build, train, deploy ML models at scale
+
+---
+
+### **AI Services**
+- **Examples:** Comprehend (NLP), Rekognition (image/video), Polly (text-to-speech), Lex (chatbots)
+
+---
+
+## 7. Developer Tools & Management
+
+### **AWS CloudFormation**
+- **Purpose:** Define infrastructure as code for provisioning resources
+- **Example:**
+    ```yaml
+    Resources:
+      MyBucket:
+        Type: AWS::S3::Bucket
+    ```
+
+---
+
+### **AWS CloudTrail**
+- **Purpose:** Audit AWS API calls for security/compliance
+
+---
+
+### **Amazon CloudWatch**
+- **Purpose:** Monitor metrics, logs, set alarms
+
+---
+
+### **AWS CodeCommit, CodeBuild, CodeDeploy, CodePipeline**
+- **Purpose:** End-to-end CI/CD pipeline services
+
+---
+
+### **AWS Systems Manager**
+- **Purpose:** Automate ops tasks, patch management, run commands
+
+---
+
+## 8. Migration & Transfer
+
+### **AWS Snow Family**
+- **Purpose:** Transfer large volumes of data into AWS
+
+---
+
+### **AWS Database Migration Service (DMS)**
+- **Purpose:** Migrate DBs to AWS with minimal downtime
+
+---
+
+### **AWS Server Migration Service (SMS)**
+- **Purpose:** Automate migration of on-premises workloads to AWS
+
+---
+
+## 9. Application Integration
+
+### **Amazon SQS (Simple Queue Service)**
+- **Purpose:** Managed message queues to decouple microservices
+
+---
+
+### **Amazon SNS (Simple Notification Service)**
+- **Purpose:** Pub/sub messaging for notifications
+
+---
+
+### **Amazon EventBridge**
+- **Purpose:** Serverless event bus for application integration
+
+---
+
+### **AWS Step Functions**
+- **Purpose:** Serverless orchestration of workflows
+
+---
+
+## 10. Cost Management & Optimization
+
+- **AWS Cost Explorer:** Visualize and analyze AWS spend
+- **AWS Budgets:** Set custom cost/usage budgets
+- **AWS Trusted Advisor:** Cost optimization recommendations
+- **Savings Plans:** Flexible pricing to save compute costs
+
+---
+
+## 11. Best Practices and Tips
+
+- Use **consistent tagging** for cost allocation/resource management
+- Apply **least privilege** with IAM
+- Enable **multi-factor authentication (MFA)**
+- Automate **backups, snapshots, disaster recovery**
+- Monitor with **CloudWatch** and set alarms proactively
+- Leverage **Auto Scaling** for cost/performance optimization
+
+---
+
+## 12. Preparing for AWS Certifications
+
+- Build a clear study plan, hands-on practice, and take mock exams.
+- Use Cloudoku’s [practice exams and cheatsheets](https://cloudoku.training/cheatsheets).
+- Follow study tips, review AWS whitepapers, practice regularly.
+
+---
+
+**Good luck on your AWS certification journey!**
